@@ -1,0 +1,146 @@
+{
+	"info": {
+		"_postman_id": "4d6a2dda-3567-434a-ba50-dc531c49c0ce",
+		"name": "Treinamento ZIS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "19945526"
+	},
+	"item": [
+		{
+			"name": "Create Integration",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"description\": \"An example integration\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://my-zend.zendesk.com/api/services/zis/registry/zisintegration",
+					"protocol": "https",
+					"host": [
+						"my-zend",
+						"zendesk",
+						"com"
+					],
+					"path": [
+						"api",
+						"services",
+						"zis",
+						"registry",
+						"zisintegration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload or Upload Bundle",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"My first ZIS integration\",\n    \"description\": \"Posts ticket data to an external target on ticket create\",\n    \"zis_template_version\": \"2019-10-14\",\n    \"resources\": {\n        \"action_post_ticket_data\": {\n            \"type\": \"ZIS::Action::Http\",\n            \"properties\": {\n                \"name\": \"action_post_ticket_data\",\n                \"definition\": {\n                    \"method\": \"POST\",\n                    \"url\": \"https://eokm0f1k6119jbp.m.pipedream.net\",\n                    \"headers\": [\n                        {\n                            \"key\": \"X-Zendesk-Ticket-Id\",\n                            \"value.$\": \"$.ticketId\"\n                        }\n                    ],\n                    \"requestBody\": {\n                        \"data\": {\n                            \"status.$\": \"$.ticketStatus\",\n                            \"priority.$\": \"$.ticketPriority\"\n                        }\n                    }\n                }\n            }\n        },\n        \"flow_ticket_created\": {\n            \"type\": \"ZIS::Flow\",\n            \"properties\": {\n                \"name\": \"ticket-created-flow\",\n                \"definition\": {\n                    \"StartAt\": \"ZendeskTicketCreated\",\n                    \"States\": {\n                        \"ZendeskTicketCreated\": {\n                            \"Type\": \"Action\",\n                            \"ActionName\": \"zis:zisintegration:action:action_post_ticket_data\",\n                            \"Parameters\": {\n                                \"ticketId.$\": \"$.input.ticket_event.ticket.id\",\n                                \"ticketStatus.$\": \"$.input.ticket_event.ticket.status\",\n                                \"ticketPriority.$\": \"$.input.ticket_event.ticket.priority\"\n                            },\n                            \"End\": true\n                        }\n                    }\n                }\n            }\n        },\n        \"jobspec_handle_ticket_event\": {\n            \"type\": \"ZIS::JobSpec\",\n            \"properties\": {\n                \"name\": \"handle-ticket-created-event\",\n                \"event_source\": \"support\",\n                \"event_type\": \"ticket.TicketCreated\",\n                \"flow_name\": \"zis:zisintegration:flow:ticket-created-flow\"\n            }\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://my-zend.zendesk.com/api/services/zis/registry/zisintegration/bundles",
+					"protocol": "https",
+					"host": [
+						"my-zend",
+						"zendesk",
+						"com"
+					],
+					"path": [
+						"api",
+						"services",
+						"zis",
+						"registry",
+						"zisintegration",
+						"bundles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Install JobSpec",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"My first ZIS integration\",\n    \"description\": \"Posts ticket data to an external target on ticket create\",\n    \"zis_template_version\": \"2019-10-14\",\n    \"resources\": {\n        \"action_post_ticket_data\": {\n            \"type\": \"ZIS::Action::Http\",\n            \"properties\": {\n                \"name\": \"action_post_ticket_data\",\n                \"definition\": {\n                    \"method\": \"POST\",\n                    \"url\": \"https://eokm0f1k6119jbp.m.pipedream.net\",\n                    \"headers\": [\n                        {\n                            \"key\": \"X-Zendesk-Ticket-Id\",\n                            \"value.$\": \"$.ticketId\"\n                        }\n                    ],\n                    \"requestBody\": {\n                        \"data\": {\n                            \"status.$\": \"$.ticketStatus\",\n                            \"priority.$\": \"$.ticketPriority\"\n                        }\n                    }\n                }\n            }\n        },\n        \"flow_ticket_created\": {\n            \"type\": \"ZIS::Flow\",\n            \"properties\": {\n                \"name\": \"ticket-created-flow\",\n                \"definition\": {\n                    \"StartAt\": \"ZendeskTicketCreated\",\n                    \"States\": {\n                        \"ZendeskTicketCreated\": {\n                            \"Type\": \"Action\",\n                            \"ActionName\": \"zis:zisintegration:action:action_post_ticket_data\",\n                            \"Parameters\": {\n                                \"ticketId.$\": \"$.input.ticket_event.ticket.id\",\n                                \"ticketStatus.$\": \"$.input.ticket_event.ticket.status\",\n                                \"ticketPriority.$\": \"$.input.ticket_event.ticket.priority\"\n                            },\n                            \"End\": true\n                        }\n                    }\n                }\n            }\n        },\n        \"jobspec_handle_ticket_event\": {\n            \"type\": \"ZIS::JobSpec\",\n            \"properties\": {\n                \"name\": \"handle-ticket-created-event\",\n                \"event_source\": \"support\",\n                \"event_type\": \"ticket.TicketCreated\",\n                \"flow_name\": \"zis:zisintegration:flow:ticket-created-flow\"\n            }\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://my-zend.zendesk.com/api/services/zis/registry/job_specs/install?job_spec_name=zis:zisintegration:job_spec:handle-ticket-created-event",
+					"protocol": "https",
+					"host": [
+						"my-zend",
+						"zendesk",
+						"com"
+					],
+					"path": [
+						"api",
+						"services",
+						"zis",
+						"registry",
+						"job_specs",
+						"install"
+					],
+					"query": [
+						{
+							"key": "job_spec_name",
+							"value": "zis:zisintegration:job_spec:handle-ticket-created-event"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
