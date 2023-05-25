@@ -1,5 +1,5 @@
 {
-  "name": "Dev Zis",
+  "name": "Zendesk to Slack Notifier",
   "author": {
     "name": "Juliana - Via Consulting",
     "email": "juliana.santos@viaconsulting.com.br",
@@ -9,7 +9,7 @@
   "private": true,
   "location": {
     "support": {
-      "ticket_sidebar": {
+      "nav_bar": {
         "url": "assets/iframe.html",
         "flexible": true
       }
