@@ -23,6 +23,37 @@
               Connect to Slack
             </button>
           </div>
+          <div class="c-txt u-mb">
+            <button id="btnEnableIntegration" class="c-btn c-btn--primary">
+              Enable integration
+            </button>
+          </div>
+          <div class="row">
+            <div class="col-6">
+              <div class="c-txt u-mb-small">
+                <label class="c-txt__label" for="txt-priority">Ticket priority</label>
+                <select class="c-txt__input c-txt__input--select" id="select-priority">
+                  <option value="low">Low</option>
+                  <option value="normal">Normal</option>
+                  <option value="high">High</option>
+                  <option value="urgent">Urgent</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="c-txt u-mb-small">
+                <label class="c-txt__label" for="txt-channel">Slack channel</label>
+                <input class="c-txt__input" id="txt-channel" placeholder="e.g. #general" type="text" />
+              </div>
+            </div>
+          </div>
+          <div class="row u-mt">
+            <div class="col-12">
+              <button id="submit" class="c-btn c-btn--primary" style="float: right">
+                Save
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -35,6 +66,10 @@
 
   <!-- Establish OAuth connections -->
   <script type="text/javascript" src="connect.js"></script>
+  <!-- Manage configuration settings -->
+  <script type="text/javascript" src="config.js"></script>
+  <!-- Enable workflow -->
+  <script type="text/javascript" src="registry.js"></script>
 </body>
 
 </html>

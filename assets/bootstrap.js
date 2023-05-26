@@ -30,5 +30,18 @@
                 .addEventListener("click", function () {
                     startSlackOAuth(integrationName, subdomain);
                 });
+            // Bind button to submit config
+            document.getElementById("submit").addEventListener("click", function () {
+                submitConfig(integrationName);
+            });
+
+            // Fetch configuration data and display in UI
+            fetchConfig(integrationName);
+            // Bind button to install the job spec
+            document
+                .getElementById("btnEnableIntegration")
+                .addEventListener("click", function () {
+                    enableIntegration(integrationName);
+                });
         });
 })();
